@@ -89,6 +89,7 @@ public class Main {
                     break;
                 }
                 case 4:{
+                    contacts.sort();
                     System.out.print("Here are all your contacts: \n");
                     boolean deleteFlag = false;
                     Node temp = contacts.head;
@@ -101,26 +102,42 @@ public class Main {
                     System.out.print("\nPress the number against the contact to delete it: ");
                     num = scanner.nextInt();
                     scanner.nextLine();
+                    Node store = null;
                     temp = contacts.getHead();
                     Node tempPrevious = contacts.getHead();
                     while (temp.getNext()!=null){
                         if(temp.getIndex() == num){
-                            tempPrevious.setNext(temp.getNext());
-                            deleteFlag = true;
-                            break;
+                            if(temp == contacts.head){
+                                contacts.head = contacts.head.getNext();
+                                System.out.println(temp.getData().getfirstName()+" "+temp.getData().getLastName()+"'s"+" contact deleted from list!");
+                                store = temp;
+                            }
+                            else{
+                                tempPrevious.setNext(temp.getNext());
+                                deleteFlag = true;
+                                System.out.println(temp.getData().getfirstName()+" "+temp.getData().getLastName()+"'s"+" contact deleted from list!");
+                                store = temp;
+                            }
                         }
                         tempPrevious = temp;
                         temp = temp.getNext();
-                    }
+                        }
                     if(temp.getIndex() == num){
                         tempPrevious.setNext(temp.getNext());
                         deleteFlag = true;
                         break;
                     }
+                    if(store!=null){
+                        while (store.getNext()!=null){
+                            store.setIndex(store.getIndex()-1);
+                            store=store.getNext();
+                        }
+                        store.setIndex(store.getIndex()-1);
+                    }
                     if(!deleteFlag){
                         System.out.println("Reffered Number Not Found");
                     }
-                    System.out.println(temp.getData().getfirstName()+" "+temp.getData().getLastName()+"'s"+" contact deleted from list!");
+                    break;
                 }
                 case 5:{
                     opt = 5;
